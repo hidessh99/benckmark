@@ -265,10 +265,11 @@ function ip_info() {
 	[[ ! -z $LOCAL_CURL ]] && DL_CMD="curl -s" || DL_CMD="wget -qO-"
 
 	local ip6me_resp="$($DL_CMD http://ip6.me/api/)"
+	local ip4me_resp="$($DL_CMD http://ip4.me/api/)"
 	local net_type="$(echo $ip6me_resp | cut -d, -f1)"
 	local net_ip="$(echo $ip6me_resp | cut -d, -f2)"
-
-	local response=$($DL_CMD https://api.ipgeolocation.io/ipgeo?apiKey=62f6ca46cf4a4939be9b1cc46da8a824&ip=$net_ip)
+	local net4_ip="$(echo $ip6me_resp | cut -d, -f2)"
+	local response=$($DL_CMD https://api.ipgeolocation.io/ipgeo?apiKey=62f6ca46cf4a4939be9b1cc46da8a824&ip=$net4_ip)
 
 	# if no response, skip output
 	if [[ -z $response ]]; then
